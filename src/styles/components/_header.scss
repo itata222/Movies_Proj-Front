@@ -1,0 +1,51 @@
+
+.header{
+    width: 100%;
+    min-height: 4rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: $main-color-black;
+
+    img{
+        object-fit: cover;
+        width: 15rem;
+        padding: 1rem;
+    }
+}
+
+.sub-header{
+    width: 100%;
+    min-height: 2rem;
+    background-color: $main-color-orange;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+
+    a{
+        text-decoration: none;
+        color: black;
+        font-weight: 500;
+
+        &:hover{
+            color:white
+        }
+    }
+    .activeClassName{
+    color: brown;
+    font-size: larger;
+}
+}
+.logout{
+    color: $main-color-orange;
+    font-size: $font-size-m;
+    font-weight: 500;
+    position: absolute;
+    top: 2rem;
+    right: 3rem;
+
+    &:hover{
+    cursor: pointer;
+    color: $main-color-white;
+    }
+}

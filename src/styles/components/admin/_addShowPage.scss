@@ -1,0 +1,23 @@
+.all-movies{
+    display: flex;
+    flex-direction: column;
+    padding: 2rem;
+    border: 1px solid $main-color-orange;
+    width: 50%;
+    margin: 1rem auto;
+
+    .movie{
+        width: 100%;
+        text-align: center;
+
+        &:hover{
+            cursor: pointer;
+            background-color: darken($color: white, $amount: 5%);
+        }
+    }
+    
+    .label{
+        font-weight: 500;
+        font-size: $font-size-m;
+    }
+}

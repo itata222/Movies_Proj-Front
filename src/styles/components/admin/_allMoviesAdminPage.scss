@@ -1,0 +1,36 @@
+.all-movies,.all-shows{
+    margin: 5rem auto;
+    border: 1px solid $main-color-orange;
+    width: 70%;
+}
+
+.movies-header,.shows-header{
+    margin: 2rem auto;
+    text-align: center;
+    font-weight: 600;
+    font-size: $font-size-l;
+}
+
+.movie,.show{
+    margin: 2rem auto;
+    font-weight: 500;
+    width: 100%;
+    height: 2rem;
+    font-size: $font-size-m;
+    line-height: 2.2;
+    text-align: center;
+
+    &:hover{
+        background-color: lighten($color: $main-color-orange, $amount: 20%);
+        cursor: pointer;
+    }
+    .showDesc{
+        margin: 0 1rem;
+        width: 50%;
+        display: inline;
+    }
+}
+.label{
+    margin: 0 0.5rem;
+    font-size: $font-size-l;
+}

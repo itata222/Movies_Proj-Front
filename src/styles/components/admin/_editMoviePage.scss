@@ -1,0 +1,65 @@
+.admin-movie-page{
+    margin: 5rem auto;
+    border: 1px solid $main-color-orange;
+    width: 80%;
+    direction: ltr ;
+    padding: 2rem;
+
+    .admin-movies{
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        .admin-movies-desc{
+            display: flex;
+            flex-direction: column;
+        
+            div{
+            margin: 2rem auto;
+            font-weight: 500;
+            width: 100%;
+            font-size: $font-size-m;
+            text-align: left;
+            direction: ltr;
+
+            span{
+                margin: 0 0.8rem;
+                font-weight: 400;
+            }
+            .label{
+            margin: 0 0.8rem;
+                font-weight: 500; 
+            }
+        }
+    }
+        .img{
+            img{
+                float: left;
+            }
+        }
+    }
+
+    h2{
+        color: $main-color-orange;
+        text-align: center;
+        font-size: $font-size-xl;
+    }
+
+}
+
+button{
+    padding: 1rem;
+    border: none;
+    background-color: $main-color-orange;
+    font-size: $font-size-m;
+    cursor: pointer;
+    display: block;
+
+    &:hover{
+        background-color: lighten($color: $main-color-orange, $amount: 5%);
+    }
+}
+button:last-child{
+    margin: auto;
+    display: flex;
+}
