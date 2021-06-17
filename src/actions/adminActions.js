@@ -15,3 +15,7 @@ export const setShowsAction = (shows) => ({
     type: 'SET_SHOWS',
     shows
 })
+export const setCinemasAction = (cinemas) => ({
+    type: 'SET_CINEMAS',
+    cinemas
+})

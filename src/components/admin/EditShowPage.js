@@ -1,7 +1,10 @@
+import moment from 'moment';
 import React, { useContext, useEffect, useState } from 'react'
+import { setMoviesAction } from '../../actions/adminActions';
 import { LoginContext } from '../../contexts/loginContext';
-import { editMovieFunc } from '../../services/adminService';
-import { getShowByIdFunc } from '../../services/userService';
+import { MoviesContext } from '../../contexts/moviesContext';
+import { editShowFunc } from '../../services/adminService';
+import { getAllMoviesFunc, getShowByIdFunc } from '../../services/userService';
 import Modal from '../main/Modal';
 import Spinner from '../main/Spinner';
 
@@ -11,43 +14,47 @@ const EditShowPage = (props) => {
     const [show, setShow] = useState({});
     const [isPageLoaded, setIsPageLoaded] = useState(false);
     const [showModal, setShowModal] = useState(false);
+    const { moviesData, dispatchMoviesData } = useContext(MoviesContext);
 
-    const [newTitle, setNewTitle] = useState('');
-    const [newDescription, setNewDescription] = useState('');
-    const [newCategory, setNewCategory] = useState('');
-    const [newDuration, setNewDuration] = useState(0);
-    const [newImageSrc, setNewImageSrc] = useState('');
+    const [newMovie, setNewMovie] = useState({});
+    const [newLanguage, setNewLanguage] = useState('');
+    const [newSpecificDate, setNewSpecificDate] = useState(null);
 
-    const [updateTitle, setUpdateTitle] = useState(false);
-    const [updateDescription, setUpdateDescription] = useState(false);
-    const [updateCategory, setUpdateCategory] = useState(false);
-    const [updateDuration, setUpdateDuration] = useState(false);
-    const [updateImg, setUpdateImg] = useState(false);
+    const [updateMovie, setUpdateMovie] = useState(false);
+    const [updateLanguage, setUpdateLanguage] = useState(false);
+    const [updateSpecificDate, setUpdateSpecificDate] = useState(false);
 
     useEffect(() => {
         let isComponentExist = true
         if (isComponentExist) {
+            getAllMoviesFunc().then((response) => {
+                if (response) {
+                    dispatchMoviesData(setMoviesAction(response));
+                }
+                else
+                    alert(response)
+            }).catch((e) => {
+                console.log(e)
+            })
             getShowByIdFunc(showID).then((response) => {
                 setShow(response)
-                console.log(response)
                 setIsPageLoaded(true)
-            })
+            }).catch(e => console.log(e.message))
         }
         return () => {
             isComponentExist = false;
         };
-    }, [showID]);
+    }, [showID, dispatchMoviesData]);
 
     const saveUpdates = () => {
-        const updatedMovie = {
-            title: newTitle.length > 0 ? newTitle : show.movie.title,
-            category: newCategory.length > 0 ? newCategory : show.movie.category,
-            description: newDescription.length > 0 ? newDescription : show.movie.description,
-            duration: newDuration > 0 ? newDuration : show.movie.duration,
-            img: newImageSrc.length > 0 ? newImageSrc : show.movie.img
+        const updatedShow = {
+            movie: !!newMovie?.id ? newMovie : show.movie,
+            language: newLanguage.length > 0 ? newLanguage : show.language,
+            specificDate: !!newSpecificDate ? String(newSpecificDate) : show.specificDate,
+            img: show.movie.img
         }
         setIsPageLoaded(false)
-        editMovieFunc(userData.token, showID, updatedMovie).then((response) => {
+        editShowFunc(userData.token, showID, updatedShow).then((response) => {
             setShowModal(true)
             setIsPageLoaded(true)
         }).catch((e) => {
@@ -60,83 +67,65 @@ const EditShowPage = (props) => {
             {
                 isPageLoaded ?
                     <div className="admin-movie-page">
-                        {showModal && <Modal text="Movie Updated" setShowModal={setShowModal} />}
-                        <h2>{show.movie.title} - Show</h2>
+                        {showModal && <Modal text="Show Updated" setShowModal={setShowModal} />}
+                        <h2>{show.movie.title} - {moment(show.specificDate).format("dddd, MMMM Do, h:mm a")}</h2>
                         <div className="admin-movies">
                             <div className="admin-movies-desc">
-                                <div className="title">
-                                    <span className="label">Title:</span>
-                                    <span>{newTitle || show.movie.title}</span>
-                                    {updateTitle ?
-                                        <div>
-                                            <input type="text" placeholder="Change Movie Title" onBlur={(e) => setNewTitle(e.target.value.trim())} />
-                                            <button>Update !</button>
-                                        </div>
+                                <div className="Movie">
+                                    <span className="label">Movie:</span>
+                                    <span>{newMovie.title || show.movie.title}</span>
+                                    {updateMovie ?
+                                        moviesData?.length > 0 ?
+                                            moviesData.map((movie, i) => (
+                                                <div key={i} className="movie" onClick={(e) => {
+                                                    e.preventDefault();
+                                                    setNewMovie(movie)
+                                                }}>
+                                                    {movie.title}
+                                                </div>
+                                            )) :
+                                            <div>No Movies Yet!</div>
                                         :
                                         <button onClick={(e) => {
                                             e.preventDefault()
-                                            setUpdateTitle(true)
+                                            setUpdateMovie(true)
                                         }}>Update</button>
                                     }
                                 </div>
-                                <div className="description">
-                                    <span className="label">Description:</span>
-                                    <span>{newDescription || show.movie.description}</span>
-                                    {updateDescription ?
+                                <div className="Language">
+                                    <span className="label">Language:</span>
+                                    <span>{newLanguage || show.language}</span>
+                                    {updateLanguage ?
                                         <div>
-                                            <input type="text" placeholder="Change Movie Description" onBlur={(e) => setNewDescription(e.target.value.trim())} />
-                                            <button>Update !</button>
+                                            <input type="text" placeholder="Change Movie Language" onBlur={(e) => setNewLanguage(e.target.value.trim())} />
                                         </div>
                                         :
                                         <button onClick={(e) => {
                                             e.preventDefault()
-                                            setUpdateDescription(true)
+                                            setUpdateLanguage(true)
                                         }}>Update</button>
                                     }
                                 </div>
-                                <div className="category">
-                                    <span className="label">Category:</span>
-                                    <span>{newCategory || show.movie.category}</span>
-                                    {updateCategory ?
+
+                                <div className="specificDate">
+                                    <span className="label">SpecificDate:</span>
+                                    <span>{moment(show.specificDate).format("dddd, MMMM Do, h:mm a")} </span>
+                                    {updateSpecificDate ?
                                         <div>
-                                            <input type="text" placeholder="Change Movie Category" onBlur={(e) => setNewCategory(e.target.value.trim())} />
-                                            <button>Update !</button>
+                                            <input type="datetime-local" placeholder="Change Movie specific Date" onChange={(e) => {
+                                                setNewSpecificDate(e.target.value)
+                                            }} />
                                         </div>
                                         :
                                         <button onClick={(e) => {
                                             e.preventDefault()
-                                            setUpdateCategory(true)
-                                        }}>Update</button>
-                                    }
-                                </div>
-                                <div className="duration">
-                                    <span className="label">Duration:</span>
-                                    <span>{newDuration || show.movie.duration} Minutes</span>
-                                    {updateDuration ?
-                                        <div>
-                                            <input type="number" placeholder="Change Movie Duration" onBlur={(e) => setNewDuration(e.target.value)} />
-                                            <button>Update !</button>
-                                        </div>
-                                        :
-                                        <button onClick={(e) => {
-                                            e.preventDefault()
-                                            setUpdateDuration(true)
+                                            setUpdateSpecificDate(true)
                                         }}>Update</button>
                                     }
                                 </div>
                             </div>
                             <div className="img">
-                                <img src={newImageSrc || show.movie.img} alt="Movie" />
-                                {updateImg ?
-                                    <div>
-                                        <input type="text" placeholder="Change Movie Image" onBlur={(e) => setNewImageSrc(e.target.value)} />
-                                        <button>Update !</button>
-                                    </div>
-                                    :
-                                    <button onClick={(e) => {
-                                        e.preventDefault()
-                                        setUpdateImg(true)
-                                    }}>Update</button>}
+                                <img src={show.movie.img} alt="Movie" />
                             </div>
                         </div>
                         <button onClick={saveUpdates}>Save Changes</button>

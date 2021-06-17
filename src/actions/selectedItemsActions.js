@@ -1,9 +1,9 @@
-export const setCinemaAction = (cinema) => ({
-    type: 'SET_CINEMA',
+export const setSelectedCinemaAction = (cinema) => ({
+    type: 'SET_SELECTED_CINEMA',
     cinema
 })
 
-export const setMovieAction = (movie) => ({
-    type: 'SET_MOVIE',
+export const setSelectedMovieAction = (movie) => ({
+    type: 'SET_SELECTED_MOVIE',
     movie
 })

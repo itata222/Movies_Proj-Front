@@ -16,11 +16,11 @@ const AdminPage = () => {
     }
     const editShow = (e) => {
         e.preventDefault();
-        history.push('/admin/editShow');
+        history.push('/admin/showsSelectionPage');
     }
     const editMovie = (e) => {
         e.preventDefault();
-        history.push('/admin/editMovie');
+        history.push('/admin/moviesSelectionPage');
     }
 
     return (
@@ -31,10 +31,10 @@ const AdminPage = () => {
             <button onClick={addNewShow}>
                 <span> Add a Show To A Cinema</span>
             </button>
-            <button onClick={editShow}>
+            <button onClick={editMovie}>
                 <span>Edit a Movie</span>
             </button>
-            <button onClick={editMovie}>
+            <button onClick={editShow}>
                 <span>Edit a Show</span>
             </button>
         </div>

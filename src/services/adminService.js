@@ -60,3 +60,15 @@ export const editMovieFunc = async (token, id, updatedMovie) => {
         console.log(err);
     }
 }
+export const editShowFunc = async (token, id, updatedShow) => {
+    try {
+        const res = await Axios.patch(developmentDB + "/admin/edit-show?id=" + id, { updatedShow }, {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        });
+        return res.data
+    } catch (err) {
+        console.log(err);
+    }
+}

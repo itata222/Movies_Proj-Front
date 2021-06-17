@@ -4,20 +4,20 @@ export const initialSelectedItemsState = {
 }
 
 
-const selectedItemsReducer = (state, action) => {
+const selectedItemsReducer = (selectedItems, action) => {
     switch (action.type) {
-        case 'SET_CINEMA':
+        case 'SET_SELECTED_CINEMA':
             return {
-                ...state,
+                ...selectedItems,
                 cinema: action.cinema
             }
-        case 'SET_MOVIE':
+        case 'SET_SELECTED_MOVIE':
             return {
-                ...state,
+                ...selectedItems,
                 movie: action.movie
             }
         default:
-            return state;
+            return { ...selectedItems };
     }
 }
 

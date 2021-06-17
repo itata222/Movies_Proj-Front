@@ -1,4 +1,4 @@
-.all-movies,.all-shows{
+.all-movies{
     margin: 5rem auto;
     border: 1px solid $main-color-orange;
     width: 70%;
@@ -11,7 +11,7 @@
     font-size: $font-size-l;
 }
 
-.movie,.show{
+.movie,.admin-show{
     margin: 2rem auto;
     font-weight: 500;
     width: 100%;

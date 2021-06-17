@@ -1,14 +1,20 @@
-.all-movies{
+.all-movies,.all-cinemas{
     display: flex;
     flex-direction: column;
     padding: 2rem;
     border: 1px solid $main-color-orange;
-    width: 50%;
-    margin: 1rem auto;
+    width: 70%;
+    margin: 1rem auto !important;
 
-    .movie{
+    .movie,.cinema{
         width: 100%;
+        margin: 0.4rem auto;
         text-align: center;
+        font-weight: 500;
+        height: 2rem;
+        font-size: 0.95rem;
+        line-height: 2.2;
+        width: 100%;
 
         &:hover{
             cursor: pointer;
@@ -17,7 +23,16 @@
     }
     
     .label{
-        font-weight: 500;
-        font-size: $font-size-m;
+        font-weight: 600;
+        font-size: $font-size-l;
+        text-align: center;
+        padding-bottom: 0.5rem;
     }
+}
+
+.addCourseHeader{
+    font-weight: 700 !important;
+    font-size: 1.7rem !important;
+    margin: -1rem !important;
+
 }

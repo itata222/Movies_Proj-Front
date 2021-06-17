@@ -7,22 +7,26 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import { useState } from 'react';
-import { LoginContext } from '../../contexts/loginContext';
+import { LoginContext } from '../../../contexts/loginContext';
 import { useContext } from 'react';
-import Modal from '../../components/main/Modal';
-import { addShowFunc } from '../../services/adminService';
-import { MoviesContext } from '../../contexts/moviesContext';
-import { addShowAction, setMoviesAction } from '../../actions/adminActions';
-import Spinner from '../main/Spinner'
-import { getAllMoviesFunc } from '../../services/userService';
-import { ShowsContext } from '../../contexts/showsContext';
+import Modal from '../../main/Modal';
+import { addShowFunc } from '../../../services/adminService';
+import { MoviesContext } from '../../../contexts/moviesContext';
+import { addShowAction, setCinemasAction, setMoviesAction } from '../../../actions/adminActions';
+import Spinner from '../../main/Spinner'
+import { getAllCinemasFunc, getAllMoviesFunc } from '../../../services/userService';
+import { ShowsContext } from '../../../contexts/showsContext';
+import { CinemasContext } from '../../../contexts/cinemasContext'
 
 const AddShowPage = () => {
     const { userData } = useContext(LoginContext);
     const [isPageLoaded, setIsPageLoaded] = useState(false);
     const { moviesData, dispatchMoviesData } = useContext(MoviesContext);
+    const { cinemasData, dispatchCinemasData } = useContext(CinemasContext);
     const { dispatchShowsData } = useContext(ShowsContext);
     const [showModal, setShowModal] = useState(false);
+    const [selectedCinema, setSelectedCinema] = useState({});
+    const [selectedCinemaTitle, setSelectedCinemaTitle] = useState('');
     const [selectedMovie, setSelectedMovie] = useState({});
     const [selectedMovieTitle, setSelectedMovieTitle] = useState('');
     const [language, setLanguage] = useState("");
@@ -31,9 +35,18 @@ const AddShowPage = () => {
     useEffect(() => {
         let isComponentExist = true;
         if (isComponentExist) {
-            getAllMoviesFunc(userData.token).then((response) => {
+            getAllMoviesFunc().then((response) => {
                 if (response) {
                     dispatchMoviesData(setMoviesAction(response));
+                }
+                else
+                    alert(response)
+            }).catch((e) => {
+                console.log(e)
+            })
+            getAllCinemasFunc().then((response) => {
+                if (response) {
+                    dispatchCinemasData(setCinemasAction(response));
                     setIsPageLoaded(true)
                 }
                 else
@@ -41,11 +54,12 @@ const AddShowPage = () => {
             }).catch((e) => {
                 console.log(e)
             })
+
         }
         return () => {
             isComponentExist = false;
         };
-    }, [userData.token, dispatchMoviesData]);
+    }, [userData.token, dispatchMoviesData, dispatchCinemasData]);
 
     const onBlurLanguage = (e) => {
         const theLanguage = e.target.value.trim();
@@ -77,7 +91,7 @@ const AddShowPage = () => {
 
     const onSubmit = (e) => {
         e.preventDefault();
-        const newShow = { movie: selectedMovie, language, specificDate, seats: [] };
+        const newShow = { cinema: selectedCinema, movie: selectedMovie, language, specificDate, seats: [] };
         console.log(newShow)
         addShowFunc(userData.token, newShow).then((response) => {
             dispatchShowsData(addShowAction(response))
@@ -90,6 +104,7 @@ const AddShowPage = () => {
     return (
 
         <div className="professorAddCourse">
+            {!isPageLoaded && <Spinner />}
             {showModal && <Modal setShowModal={setShowModal} text="Show Added !" />}
             <div className="addCourseContainer">
                 <Container component="main" maxWidth="xs">
@@ -99,31 +114,54 @@ const AddShowPage = () => {
                             Add Show
                         </Typography>
                         <form className={classes.form} noValidate onSubmit={onSubmit}>
-                            {
-                                isPageLoaded ?
-
-                                    <div className="all-movies">
-                                        <div className="label">Current Movies</div>
-                                        {
-                                            moviesData?.length > 0 ?
-                                                moviesData.map((movie, i) => (
-                                                    <div key={i} className="movie" onClick={(e) => {
-                                                        e.preventDefault();
-                                                        setSelectedMovieTitle(movie.title)
-                                                        setSelectedMovie(movie)
-                                                    }}>
-                                                        {movie.title}
-                                                    </div>
-                                                )) :
-                                                <div>No Movies Yet!</div>
-                                        }
-                                    </div> :
-                                    <Spinner />
-                            }
+                            <div className="all-cinemas">
+                                <div className="label">Cinemas</div>
+                                {
+                                    cinemasData?.length > 0 ?
+                                        cinemasData.map((cinema, i) => (
+                                            <div key={i} className="cinema" onClick={(e) => {
+                                                e.preventDefault();
+                                                setSelectedCinemaTitle(cinema.title)
+                                                setSelectedCinema(cinema)
+                                            }}>
+                                                {cinema.title}
+                                            </div>
+                                        )) :
+                                        <div>No Cinemas Yet!</div>
+                                }
+                            </div>
+                            <div className="all-movies">
+                                <div className="label">Current Movies</div>
+                                {
+                                    moviesData?.length > 0 ?
+                                        moviesData.map((movie, i) => (
+                                            <div key={i} className="movie" onClick={(e) => {
+                                                e.preventDefault();
+                                                setSelectedMovieTitle(movie.title)
+                                                setSelectedMovie(movie)
+                                            }}>
+                                                {movie.title}
+                                            </div>
+                                        )) :
+                                        <div>No Movies Yet!</div>
+                                }
+                            </div>
                             <Grid container spacing={2}>
                                 <Grid item xs={12} sm={10}>
                                     <TextField
-
+                                        variant="outlined"
+                                        InputProps={{
+                                            readOnly: true,
+                                        }}
+                                        fullWidth
+                                        id="cinema"
+                                        label="Cinema"
+                                        name="cinema"
+                                        value={selectedCinemaTitle}
+                                    />
+                                </Grid>
+                                <Grid item xs={12} sm={10}>
+                                    <TextField
                                         variant="outlined"
                                         InputProps={{
                                             readOnly: true,

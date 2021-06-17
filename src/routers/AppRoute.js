@@ -12,12 +12,14 @@ import ShowsContextProvider from '../contexts/showsContext';
 import LoginPage from '../components/admin/LoginPage'
 import AdminPage from '../components/admin/AdminPage'
 import AdminRoute from './AdminRoute';
-import AddMoviePage from '../components/admin/AddMoviePage';
-import AddShowPage from '../components/admin/AddShowPage';
-import EditMoviePage from '../components/admin/EditMoviePage'
+import AddMoviePage from '../components/admin/addMoviePage/AddMoviePage';
+import AddShowPage from '../components/admin/addShowPage/AddShowPage';
+import EditMoviePage from '../components/admin/editMoviePage/EditMoviePage'
 import EditShowPage from '../components/admin/EditShowPage'
 import AdminMoviesSelectionPage from '../components/admin/AdminMoviesSelectionPage'
 import AdminShowsSelectionPage from '../components/admin/AdminShowsSelectionPage'
+import CinemasContextProvider from '../contexts/cinemasContext'
+import SelectedItemsContextProvider from '../contexts/selectedItemsContext'
 
 
 const AppRoute = () => {
@@ -28,24 +30,29 @@ const AppRoute = () => {
             <LoginContextProvider>
                 <MoviesContextProvider>
                     <ShowsContextProvider>
-                        <Header />
-                        <Switch>
-                            <Route path="/" exact>
-                                <Redirect to="/home" />
-                            </Route>
-                            <Route path="/home" component={Home} />
-                            <Route path="/in-cinema" component={InCinema} />
-                            <Route path="/movies/:title" component={MoviePage} />
-                            <Route path='/admin/login' component={LoginPage} />
-                            <AdminRoute path='/admin/home' component={AdminPage} />
-                            <AdminRoute path='/admin/addMovieToSystem' component={AddMoviePage} />
-                            <AdminRoute path='/admin/addNewShow' component={AddShowPage} />
-                            <AdminRoute path='/admin/editMovie/:id' component={EditMoviePage} />
-                            <AdminRoute path='/admin/editShow/:id' component={EditShowPage} />
-                            <AdminRoute path='/admin/moviesSelectionPage' component={AdminMoviesSelectionPage} />
-                            <AdminRoute path='/admin/showsSelectionPage' component={AdminShowsSelectionPage} />
-                            <Route path='*' component={PageNotFound} />
-                        </Switch>
+                        <CinemasContextProvider>
+                            <SelectedItemsContextProvider>
+                                <Header />
+                                <Switch>
+                                    <Route path="/" exact>
+                                        <Redirect to="/home" />
+                                    </Route>
+                                    <Route path="/home" component={Home} />
+                                    <Route path="/in-cinema" component={InCinema} />
+                                    <Route path="/movies/:title" component={MoviePage} />
+                                    <Route path='/login' component={LoginPage} />
+                                    <Route path='/movie-page/:id' component={MoviePage} />
+                                    <AdminRoute path='/admin/home' component={AdminPage} />
+                                    <AdminRoute path='/admin/addMovieToSystem' component={AddMoviePage} />
+                                    <AdminRoute path='/admin/addNewShow' component={AddShowPage} />
+                                    <AdminRoute path='/admin/editMovie/:id' component={EditMoviePage} />
+                                    <AdminRoute path='/admin/editShow/:id' component={EditShowPage} />
+                                    <AdminRoute path='/admin/moviesSelectionPage' component={AdminMoviesSelectionPage} />
+                                    <AdminRoute path='/admin/showsSelectionPage' component={AdminShowsSelectionPage} />
+                                    <Route path='*' component={PageNotFound} />
+                                </Switch>
+                            </SelectedItemsContextProvider>
+                        </CinemasContextProvider>
                     </ShowsContextProvider>
                 </MoviesContextProvider>
             </LoginContextProvider>

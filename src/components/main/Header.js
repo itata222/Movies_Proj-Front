@@ -35,7 +35,7 @@ const Header = () => {
                             <NavLink activeClassName="activeClassName" to="/admin/showsSelectionPage">עריכת הקרנה</NavLink>
                         </> :
                         <>   <NavLink activeClassName="activeClassName" to="/in-cinema">מה בקולנוע</NavLink>
-                            <NavLink activeClassName="activeClassName" to="/admin/login">כניסה כמנהל</NavLink>
+                            <NavLink activeClassName="activeClassName" to="/login">כניסה כמנהל</NavLink>
                         </>
                 }
 

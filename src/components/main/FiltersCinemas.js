@@ -1,23 +1,16 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useContext, useEffect, useRef, useState } from 'react'
+import { setSelectedCinemaAction } from '../../actions/selectedItemsActions';
+import { SelectedItemsContext } from '../../contexts/selectedItemsContext';
+import { getAllCinemasFunc, getCinemaByTitle } from '../../services/userService';
+import Spinner from './Spinner';
 
-const FiltersCinemas = (props) => {
-    const cinemas = [
-        {
-            name: "יס פלאנט ראשון לציון",
-            movies: [{
-                title: "asds"
-            }]
-        },
-        {
-            name: "יס פלאנט באר שבע",
-            movies: [{
-                title: "asds"
-            }]
-        },
-    ]
+const FiltersCinemas = () => {
+    const { dispatchSelectedItemsData } = useContext(SelectedItemsContext);
+    const [cinemas, setCinemas] = useState([]);
     const [showDropDownCinemaSelect, setShowDropDownCinemaSelect] = useState(false);
-    // const [selectedCinema, setSelectedCinema] = useState(cinemas[0].name)
-    const [cinemasToDisplay, setCinemasToDisplay] = useState([...cinemas]);
+    const [selectedCinemaTitle, setSelectedCinemaTitle] = useState('');
+    const [cinemasToDisplay, setCinemasToDisplay] = useState([]);
+    const [isDataLoaded, setIsDataLoaded] = useState(false);
     let menuRef = useRef()
 
     const openDropDownMenu = () => {
@@ -29,8 +22,18 @@ const FiltersCinemas = (props) => {
         const cinemasNew = [...cinemas];
         setCinemasToDisplay(searchValue === "" ?
             cinemasNew :
-            cinemasNew.filter((cinema) => cinema.name.toLowerCase().includes(searchValue)));
+            cinemasNew.filter((cinema) => cinema.title.toLowerCase().includes(searchValue)));
     }
+
+    useEffect(() => {
+        getAllCinemasFunc().then((response) => {
+            setCinemas(response)
+            setCinemasToDisplay(response)
+            setSelectedCinemaTitle(response[0].title)
+            dispatchSelectedItemsData(setSelectedCinemaAction(response[0]));
+            setIsDataLoaded(true)
+        }).catch((e) => console.log(e))
+    }, [dispatchSelectedItemsData])
 
     useEffect(() => {
         document.addEventListener('mouseup', (e) => {
@@ -39,31 +42,33 @@ const FiltersCinemas = (props) => {
         })
     });
 
-    // useEffect(() => {
-    //     const cinemaName = props.params.cinema
-    //     setSelectedCinema(cinemaName)
-    // }, [props.params.cinema]);
+
+    const handleClick = (e) => {
+        setSelectedCinemaTitle(e.target.innerHTML)
+        getCinemaByTitle(e.target.innerHTML).then((response) => {
+            dispatchSelectedItemsData(setSelectedCinemaAction(response));
+        }).catch(e => alert(e.message))
+    }
 
 
     return (
-        <div className="filters-home">
-            <h2>הזמנת כרטיסים</h2>
-            <div className="filters-home-cinema">
+        <>{isDataLoaded ?
+            <div className="filters-cinemas">
                 <div className="cinema-select">
                     <button onClick={openDropDownMenu}>
-                        <span>ראשון לציון </span>
+                        <span>{selectedCinemaTitle || cinemas[0].title} </span>
                         <span className="arrow-container">
                             <span className="arrow-down"></span>
                         </span>
                     </button>
                     {showDropDownCinemaSelect &&
-                        <div className="cinema-dropDown">
-                            <input type="text" ref={menuRef} onInput={filterCinemasText} />
-                            <ul name="cinema" id="cinema">
+                        <div ref={menuRef} className="cinema-dropDown">
+                            <input type="text" onInput={filterCinemasText} />
+                            <ul name="cinema" id="cinema" >
                                 {cinemasToDisplay.length > 0 ?
                                     cinemasToDisplay.map((cinema, i) => (
-                                        <li key={i} value={cinema.name}>
-                                            {cinema.name}
+                                        <li key={i} value={cinema.title} onClick={handleClick}>
+                                            {cinema.title}
                                         </li>
                                     )) :
                                     <li value="no cinemas">לא נמצאו תוצאות</li>
@@ -72,8 +77,9 @@ const FiltersCinemas = (props) => {
                         </div>
                     }
                 </div>
-            </div>
-        </div>
+            </div> :
+            <Spinner />
+        }</>
     )
 }
 
