@@ -1,0 +1,59 @@
+.in-cinema{
+    padding: 1rem;
+    margin: 4rem auto;
+    width: 75%;
+    color: $main-color-white;
+    background-color: $main-color-black;
+    text-align: center;
+
+    .in-cinema-movies{
+        padding-top: 1rem;
+        padding-bottom: 1rem;
+        width: 96%;
+        margin: auto;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1rem;
+        grid-auto-rows: 15rem;
+        // border: 1px solid $main-color-orange;
+
+        .inCinemaMovie{
+            width:100%;
+            height: 100%;
+            display: grid;
+            grid-template-columns: 1.3fr 2fr;
+            grid-template-rows: 1fr 3fr;
+            grid-template-areas:
+            "title img"
+            "description img";
+            margin: auto;
+            padding: 1rem;
+            gap: 0.8rem;
+            border: 1px solid $main-color-orange;
+
+            &:hover{
+                cursor: pointer;
+                opacity: .75;
+            }
+
+            .movie-img{
+                grid-area: img;
+               
+                img{
+                    width: 100%;
+                    height: 100%;
+                }
+            }
+            .movie-title{
+                grid-area: title;
+                font-size: larger;
+                color: $main-color-orange;
+            }
+            .movie-description{
+                grid-area:description;
+                overflow-y: hidden;
+                max-height: 10rem;
+            }
+        }
+    }
+}

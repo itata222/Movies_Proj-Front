@@ -1,5 +1,6 @@
 .filters-cinemas{
-    margin: 2rem auto;
+    margin: 2rem 0.2rem;
+    width: fit-content;
 }
 
   .cinema-select{
@@ -12,14 +13,16 @@
             color: #191919;
             font-size: 14px;
             box-shadow: none !important;
-            padding-left: 12px;
+            padding-left: 22px;
             padding-right: 1rem;
             display: flex;
             align-items: center;
-            width: 12rem;
-            height: 40px;
+            width: 15rem;
+            height: 50px;
             justify-content: space-between;
             background-color: white;
+            font-size: $font-size-l;
+            font-weight: 500;
 
             &:hover{
                 border: 1px solid #000;
@@ -58,9 +61,10 @@
             justify-content: space-evenly;
             background-color: white;
             border: 1px solid #e2e2e2;
-            width: 12rem;
+            width: 15rem;
             margin-top: 0.2rem;
             padding-top: 0.2rem;
+            z-index: 10;
 
             ul{
                 list-style-type: none;
@@ -72,6 +76,7 @@
                 li{
                     margin: 0.4rem auto;
                     padding-right:1rem;
+                    font-size: larger;
                     &:hover{
                         background-color: #e2e2e2;
                         cursor: pointer;

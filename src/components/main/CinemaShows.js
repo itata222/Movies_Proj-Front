@@ -6,7 +6,7 @@ import moment from 'moment';
 import Spinner from './Spinner';
 import { CinemasContext } from '../../contexts/cinemasContext';
 import { setCinemasAction } from '../../actions/adminActions';
-import { setSelectedCinemaAction } from '../../actions/selectedItemsActions';
+import { setSelectedCinemaAction, setSelectedMovieAction } from '../../actions/selectedItemsActions';
 
 
 const CinemaShows = (props) => {
@@ -19,16 +19,19 @@ const CinemaShows = (props) => {
 
 
     const onClickMovie = (show) => {
+        console.log(show.movie)
         if (props.user === 'admin')
             history.push(`/admin/editShow/${show._id}`)
-        else
+        else {
+            dispatchSelectedItemsData(setSelectedMovieAction(show.movie))
             history.push(`/movie-page/${show.movie._id}`)
+        }
     }
     const onClickShow = (show) => {
         if (props.user === 'admin')
             history.push(`/admin/editShow/${show._id}`)
         else
-            history.push(`/selectTickets-page/${show.movie._id}`)
+            history.push(`/selectTickets-page/${show._id}`)
     }
 
     useEffect(() => {
@@ -65,31 +68,35 @@ const CinemaShows = (props) => {
     return (
         <div className="showsSection">
             {
-                (isDataLoaded && cinemaShows.shows) ?
-                    cinemaShows.shows.length > 0 ?
-                        cinemaShows.shows.map((show, i) => {
-
+                (isDataLoaded && cinemaShows) ?
+                    cinemaShows.length > 0 ?
+                        cinemaShows.map((show, i) => {
                             return (
                                 <div className={className + 'show'} key={i} >
-                                    <div className="showImg" onClick={() => onClickMovie(show.show)}>
-                                        <img src={show.show.movie.img} alt="" />
+                                    <div className="showImg" onClick={() => onClickMovie(show[1][0])}>
+                                        <img src={show[1][0].movie.img} alt="" />
                                     </div>
                                     <div className="showTextDescription">
-                                        <div className="show-title" onClick={() => onClickMovie(show.show)}>
-                                            <span>{show.show.movie.title}</span>
+                                        <div className="show-title" onClick={() => onClickMovie(show[1][0])}>
+                                            <span>{show[1][0].movie.title}</span>
                                         </div>
                                         <div className="show-duration">
-                                            <span>{show.show.movie.category}</span>
+                                            <span>{show[1][0].movie.category}</span>
                                             <span className="divider"></span>
-                                            <span>{show.show.movie.duration} Min</span>
+                                            <span>{show[1][0].movie.duration} Min</span>
                                         </div>
                                         <div className="show-times">
-                                            <div className="show-time" onClick={() => onClickShow(show.show)}>
-                                                {moment(show.specificDate).format('HH:mm')}
-                                            </div>
+                                            {
+                                                show[1].map((exactShow, i) => (
+                                                    <div key={i} className="show-time" onClick={() => onClickShow(exactShow)}>
+                                                        {moment(exactShow.specificDate).format('HH:mm')}
+                                                    </div>
+                                                ))
+                                            }
+
                                         </div>
                                         <div className="show-language">
-                                            <span>{show.show.language}</span>
+                                            <span>{show[1][0].language}</span>
                                         </div>
                                     </div>
                                 </div>

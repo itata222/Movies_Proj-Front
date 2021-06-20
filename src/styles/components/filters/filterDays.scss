@@ -1,0 +1,35 @@
+.filterDays{
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    width: 60%;
+    span{
+        font-size: $font-size-l;
+        font-weight: 500;
+        color: black;
+
+        &:hover{
+            cursor: pointer;
+            color: $main-color-orange
+        }
+    }
+    .day6{
+        color: lighten($color: #000000, $amount: 50%);
+    }
+    .day5{
+        color: lighten($color: #000000, $amount: 40%);
+    }
+    .day4{
+        color: lighten($color: #000000, $amount: 32%);
+    }
+    .day3{
+        color: lighten($color: #000000, $amount: 20%);
+    }
+    .day2{
+        color: lighten($color: #000000, $amount: 12%);
+    }
+    .day1{
+        color: lighten($color: #000000, $amount: 8%);
+    }
+
+}

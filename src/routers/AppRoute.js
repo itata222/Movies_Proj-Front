@@ -20,6 +20,7 @@ import AdminMoviesSelectionPage from '../components/admin/AdminMoviesSelectionPa
 import AdminShowsSelectionPage from '../components/admin/AdminShowsSelectionPage'
 import CinemasContextProvider from '../contexts/cinemasContext'
 import SelectedItemsContextProvider from '../contexts/selectedItemsContext'
+import SelectTickets from '../components/main/SelectTickets'
 
 
 const AppRoute = () => {
@@ -42,6 +43,7 @@ const AppRoute = () => {
                                     <Route path="/movies/:title" component={MoviePage} />
                                     <Route path='/login' component={LoginPage} />
                                     <Route path='/movie-page/:id' component={MoviePage} />
+                                    <Route path='/selectTickets-page/:id' component={SelectTickets} />
                                     <AdminRoute path='/admin/home' component={AdminPage} />
                                     <AdminRoute path='/admin/addMovieToSystem' component={AddMoviePage} />
                                     <AdminRoute path='/admin/addNewShow' component={AddShowPage} />

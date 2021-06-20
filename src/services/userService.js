@@ -7,7 +7,7 @@ export const getCinemaByTitle = async (title) => {
         const res = await Axios.get(developmentDB + "/get-cinema?title=" + title);
         return res.data
     } catch (err) {
-        console.log(err);
+        return err.message
     }
 }
 export const getMovieByIdFunc = async (id) => {
@@ -15,7 +15,7 @@ export const getMovieByIdFunc = async (id) => {
         const res = await Axios.get(developmentDB + "/get-movie?id=" + id);
         return res.data
     } catch (err) {
-        console.log(err);
+        return err.message
     }
 }
 export const getShowByIdFunc = async (id) => {
@@ -23,16 +23,17 @@ export const getShowByIdFunc = async (id) => {
         const res = await Axios.get(developmentDB + "/get-show?id=" + id);
         return res.data
     } catch (err) {
-        console.log(err);
+        return err.message
     }
 }
 
 export const getAllMoviesFunc = async () => {
     try {
         const res = await Axios.get(developmentDB + "/all-movies");
+        console.log(res.data)
         return res.data
     } catch (err) {
-        console.log(err);
+        return err.message
     }
 }
 
@@ -41,7 +42,7 @@ export const getAllShowsFunc = async () => {
         const res = await Axios.get(developmentDB + "/all-shows");
         return res.data
     } catch (err) {
-        console.log(err);
+        return err.message
     }
 }
 
@@ -50,7 +51,7 @@ export const getAllCinemasFunc = async () => {
         const res = await Axios.get(developmentDB + "/all-cinemas");
         return res.data
     } catch (err) {
-        console.log(err);
+        return err.message
     }
 }
 
@@ -59,6 +60,29 @@ export const getAllCinemaShowsFunc = async (cinemaTitle) => {
         const res = await Axios.get(developmentDB + "/cinema-shows?title=" + cinemaTitle);
         return res.data
     } catch (err) {
-        console.log(err);
+        return err.message
+    }
+}
+
+export const getMovieRating = async (movie) => {
+    try {
+        let total = 0;
+        for (let i = 0; i < movie.reviews.length; i++) {
+            total += movie.reviews[i].review.rating;
+        }
+        let avg = total / movie.reviews.length;
+        // console.log(avg)
+        return avg
+    } catch (e) {
+        return e.message
+    }
+}
+
+export const addReviewFunc = async (review, movieID) => {
+    try {
+        const res = await Axios.post(developmentDB + "/add-review?movieID=" + movieID, { review });
+        return res.data
+    } catch (e) {
+        return e.message
     }
 }

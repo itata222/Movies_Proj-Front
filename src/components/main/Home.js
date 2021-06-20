@@ -1,6 +1,7 @@
 import React from 'react';
 import CinemaShows from './CinemaShows';
 import FiltersCinemas from './FiltersCinemas';
+import FiltersDays from './FiltersDays';
 import SlideMovies from './SlideMovies';
 
 
@@ -11,7 +12,10 @@ const Home = () => {
         <div className="home">
             <SlideMovies />
             <h2>להזמנת כרטיסים</h2>
-            <FiltersCinemas />
+            <div className="filters">
+                <FiltersCinemas />
+                <FiltersDays />
+            </div>
             <CinemaShows user='user' />
         </div>
     )

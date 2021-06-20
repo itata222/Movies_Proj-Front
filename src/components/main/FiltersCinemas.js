@@ -63,7 +63,7 @@ const FiltersCinemas = () => {
                     </button>
                     {showDropDownCinemaSelect &&
                         <div ref={menuRef} className="cinema-dropDown">
-                            <input type="text" onInput={filterCinemasText} />
+                            <input type="text" onInput={filterCinemasText} placeholder="Type Cinema..." />
                             <ul name="cinema" id="cinema" >
                                 {cinemasToDisplay.length > 0 ?
                                     cinemasToDisplay.map((cinema, i) => (
