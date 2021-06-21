@@ -32,4 +32,7 @@
         color: lighten($color: #000000, $amount: 8%);
     }
 
+    .activeDayFilter{
+        color: $main-color-orange;
+    }
 }

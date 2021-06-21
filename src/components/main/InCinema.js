@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import { getAllMoviesFunc } from '../../services/userService';
 import InCinemaMovie from './InCinemaMovie';
-import Spinner from './Spinner'
+import Spinner from './Spinner';
+import { nanoid } from 'nanoid';
 
 
 const InCinema = () => {
@@ -27,7 +28,7 @@ const InCinema = () => {
                 {
                     movies.length > 0 ?
                         movies.map((movie, i) => (
-                            <InCinemaMovie movie={movie} key={i} />
+                            <InCinemaMovie movie={movie} key={nanoid()} />
                         ))
                         :
                         <Spinner />

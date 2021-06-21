@@ -30,7 +30,6 @@ export const getShowByIdFunc = async (id) => {
 export const getAllMoviesFunc = async () => {
     try {
         const res = await Axios.get(developmentDB + "/all-movies");
-        console.log(res.data)
         return res.data
     } catch (err) {
         return err.message

@@ -19,8 +19,9 @@ import EditShowPage from '../components/admin/EditShowPage'
 import AdminMoviesSelectionPage from '../components/admin/AdminMoviesSelectionPage'
 import AdminShowsSelectionPage from '../components/admin/AdminShowsSelectionPage'
 import CinemasContextProvider from '../contexts/cinemasContext'
-import SelectedItemsContextProvider from '../contexts/selectedItemsContext'
+// import SelectedItemsContextProvider from '../contexts/selectedItemsContext'
 import SelectTickets from '../components/main/SelectTickets'
+import FiltersContextProvider from '../contexts/filtersContext'
 
 
 const AppRoute = () => {
@@ -32,7 +33,7 @@ const AppRoute = () => {
                 <MoviesContextProvider>
                     <ShowsContextProvider>
                         <CinemasContextProvider>
-                            <SelectedItemsContextProvider>
+                            <FiltersContextProvider >
                                 <Header />
                                 <Switch>
                                     <Route path="/" exact>
@@ -53,7 +54,7 @@ const AppRoute = () => {
                                     <AdminRoute path='/admin/showsSelectionPage' component={AdminShowsSelectionPage} />
                                     <Route path='*' component={PageNotFound} />
                                 </Switch>
-                            </SelectedItemsContextProvider>
+                            </FiltersContextProvider>
                         </CinemasContextProvider>
                     </ShowsContextProvider>
                 </MoviesContextProvider>

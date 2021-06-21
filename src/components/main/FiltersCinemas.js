@@ -1,39 +1,45 @@
 import React, { useContext, useEffect, useRef, useState } from 'react'
-import { setSelectedCinemaAction } from '../../actions/selectedItemsActions';
-import { SelectedItemsContext } from '../../contexts/selectedItemsContext';
-import { getAllCinemasFunc, getCinemaByTitle } from '../../services/userService';
+import { nanoid } from 'nanoid';
 import Spinner from './Spinner';
+import { FiltersContext } from '../../contexts/filtersContext';
+import { CinemasContext } from '../../contexts/cinemasContext';
+import { setCinemaFilterAction } from '../../actions/filterActions';
+import { setCinemasAction } from '../../actions/adminActions';
+import { getAllCinemasFunc } from '../../services/userService';
+
 
 const FiltersCinemas = () => {
-    const { dispatchSelectedItemsData } = useContext(SelectedItemsContext);
-    const [cinemas, setCinemas] = useState([]);
+    const { cinemasData, dispatchCinemasData } = useContext(CinemasContext);
     const [showDropDownCinemaSelect, setShowDropDownCinemaSelect] = useState(false);
     const [selectedCinemaTitle, setSelectedCinemaTitle] = useState('');
     const [cinemasToDisplay, setCinemasToDisplay] = useState([]);
     const [isDataLoaded, setIsDataLoaded] = useState(false);
-    let menuRef = useRef()
+    const { dispatchFiltersData } = useContext(FiltersContext);
 
-    const openDropDownMenu = () => {
-        setShowDropDownCinemaSelect(true)
-    }
+    let menuRef = useRef()
 
     const filterCinemasText = (e) => {
         const searchValue = e.target.value;
-        const cinemasNew = [...cinemas];
         setCinemasToDisplay(searchValue === "" ?
-            cinemasNew :
-            cinemasNew.filter((cinema) => cinema.title.toLowerCase().includes(searchValue)));
+            cinemasData :
+            cinemasData.filter((cinema) => cinema.title.toLowerCase().includes(searchValue)));
     }
 
     useEffect(() => {
-        getAllCinemasFunc().then((response) => {
-            setCinemas(response)
-            setCinemasToDisplay(response)
-            setSelectedCinemaTitle(response[0].title)
-            dispatchSelectedItemsData(setSelectedCinemaAction(response[0]));
-            setIsDataLoaded(true)
-        }).catch((e) => console.log(e))
-    }, [dispatchSelectedItemsData])
+        let isComponentExist = true
+        if (isComponentExist) {
+            getAllCinemasFunc().then((res) => {
+                dispatchCinemasData(setCinemasAction(res))
+                setCinemasToDisplay(res)
+                setSelectedCinemaTitle(res[0].title)
+                dispatchFiltersData(setCinemaFilterAction(res[0].title))
+                setIsDataLoaded(true)
+            })
+        }
+        return () => {
+            isComponentExist = false;
+        };
+    }, [dispatchFiltersData, dispatchCinemasData, cinemasData]);
 
     useEffect(() => {
         document.addEventListener('mouseup', (e) => {
@@ -44,19 +50,19 @@ const FiltersCinemas = () => {
 
 
     const handleClick = (e) => {
+        const cinemaTitle = e.target.innerHTML.trim()
+        dispatchFiltersData(setCinemaFilterAction(cinemaTitle))
         setSelectedCinemaTitle(e.target.innerHTML)
-        getCinemaByTitle(e.target.innerHTML).then((response) => {
-            dispatchSelectedItemsData(setSelectedCinemaAction(response));
-        }).catch(e => alert(e.message))
     }
+
 
 
     return (
         <>{isDataLoaded ?
             <div className="filters-cinemas">
                 <div className="cinema-select">
-                    <button onClick={openDropDownMenu}>
-                        <span>{selectedCinemaTitle || cinemas[0].title} </span>
+                    <button onClick={() => setShowDropDownCinemaSelect(true)}>
+                        <span>{selectedCinemaTitle || cinemasData[0].title} </span>
                         <span className="arrow-container">
                             <span className="arrow-down"></span>
                         </span>
@@ -67,7 +73,7 @@ const FiltersCinemas = () => {
                             <ul name="cinema" id="cinema" >
                                 {cinemasToDisplay.length > 0 ?
                                     cinemasToDisplay.map((cinema, i) => (
-                                        <li key={i} value={cinema.title} onClick={handleClick}>
+                                        <li key={nanoid()} value={cinema.title} onClick={handleClick}>
                                             {cinema.title}
                                         </li>
                                     )) :
