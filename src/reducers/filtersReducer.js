@@ -1,5 +1,5 @@
 export const filtersInitialState = {
-    cinema: '',
+    cinema: 'יס פלאנט ראשון לציון',
     day: 0
 };
 

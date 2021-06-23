@@ -1,7 +1,6 @@
 import React from 'react'
 
 const MovieReviews = ({ movie }) => {
-    console.log(movie)
     return (
         <div className="all-reviews">
             <h2>Reviews</h2>

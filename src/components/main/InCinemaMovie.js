@@ -1,23 +1,18 @@
 import React, { useContext } from 'react'
 import { useHistory } from 'react-router-dom'
 import { LoginContext } from '../../contexts/loginContext';
-import { SelectedItemsContext } from '../../contexts/selectedItemsContext';
-import { setSelectedMovieAction } from '../../actions/selectedItemsActions'
 
 
 const InCinemaMovie = ({ movie }) => {
 
     const history = useHistory();
     const { userData } = useContext(LoginContext)
-    const { dispatchSelectedItemsData } = useContext(SelectedItemsContext);
 
     const movieClicked = (movieObJ) => {
         if (userData.user === 'admin')
             history.push(`/admin/editMovie/${movieObJ._id}`)
         else {
-            dispatchSelectedItemsData(setSelectedMovieAction(movieObJ))
             history.push(`/movie-page/${movieObJ._id}`)
-
         }
     }
 

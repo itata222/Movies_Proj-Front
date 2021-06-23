@@ -1,11 +1,12 @@
-import React, { } from 'react';
+import React, { useContext } from 'react';
+import { LoginContext } from '../../contexts/loginContext';
 import CinemaShows from './CinemaShows';
 import FiltersHome from './FiltersHome';
 import SlideMovies from './SlideMovies';
 
 
 const Home = () => {
-
+    const { userData } = useContext(LoginContext)
 
     return (
         <div className="home">
@@ -14,7 +15,7 @@ const Home = () => {
             <div className="filters">
                 <FiltersHome />
             </div>
-            <CinemaShows user='user' />
+            <CinemaShows user={userData.admin ? 'admin' : 'user'} />
         </div>
     )
 }

@@ -30,6 +30,7 @@ const AddShowPage = () => {
     const [selectedMovie, setSelectedMovie] = useState({});
     const [selectedMovieTitle, setSelectedMovieTitle] = useState('');
     const [language, setLanguage] = useState("");
+    const [showSpinner, setShowSpinner] = useState(false);
     const [specificDate, setSpecificDate] = useState(null);
 
     useEffect(() => {
@@ -91,12 +92,14 @@ const AddShowPage = () => {
 
     const onSubmit = (e) => {
         e.preventDefault();
+        setShowSpinner(true)
         const newShow = { cinema: selectedCinema, movie: selectedMovie, language, specificDate, seats: [] };
-        console.log(newShow)
         addShowFunc(userData.token, newShow).then((response) => {
             dispatchShowsData(addShowAction(response))
+            setShowSpinner(false)
             setShowModal(true);
         }).catch((e) => {
+            setShowSpinner(false)
             console.log(e)
         })
     }
@@ -105,6 +108,7 @@ const AddShowPage = () => {
 
         <div className="professorAddCourse">
             {!isPageLoaded && <Spinner />}
+            {showSpinner && <Spinner />}
             {showModal && <Modal setShowModal={setShowModal} text="Show Added !" />}
             <div className="addCourseContainer">
                 <Container component="main" maxWidth="xs">

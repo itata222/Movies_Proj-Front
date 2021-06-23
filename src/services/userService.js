@@ -63,6 +63,23 @@ export const getAllCinemaShowsFunc = async (cinemaTitle) => {
     }
 }
 
+export const addReviewFunc = async (review, movieID) => {
+    try {
+        const res = await Axios.post(developmentDB + "/add-review?movieID=" + movieID, { review });
+        return res.data
+    } catch (e) {
+        return e.message
+    }
+}
+export const takeSeatsFunc = async (showID, seats) => {
+    try {
+        const res = await Axios.post(developmentDB + "/take-seats?showID=" + showID, { seats });
+        return res.data
+    } catch (e) {
+        return e.message
+    }
+}
+
 export const getMovieRating = async (movie) => {
     try {
         let total = 0;
@@ -72,15 +89,6 @@ export const getMovieRating = async (movie) => {
         let avg = total / movie.reviews.length;
         // console.log(avg)
         return avg
-    } catch (e) {
-        return e.message
-    }
-}
-
-export const addReviewFunc = async (review, movieID) => {
-    try {
-        const res = await Axios.post(developmentDB + "/add-review?movieID=" + movieID, { review });
-        return res.data
     } catch (e) {
         return e.message
     }

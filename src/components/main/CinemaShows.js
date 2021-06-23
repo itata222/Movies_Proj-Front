@@ -15,27 +15,18 @@ const CinemaShows = (props) => {
     const [showsToDisplay, setShowsToDisplay] = useState([]);
     const [isDataLoaded, setIsDataLoaded] = useState(false);
 
-
     useEffect(() => {
-        let isComponentExist = true;
-        if (isComponentExist) {
-            if (filtersData.cinema !== '') {
-                getAllCinemaShowsFunc(filtersData.cinema).then((response) => {
-                    const filtered = response.forEach(movieObj => {
-                        movieObj[1].filter((show) => {
-                            return moment().day(filtersData.day).isSame(moment(show.specificDate), 'day')
-                        })
-                    })
-                    setShowsToDisplay(filtered)
-                    setIsDataLoaded(true)
-                }).catch((e) => {
-                    console.log(e.message)
+        getAllCinemaShowsFunc(filtersData.cinema).then((response) => {
+            const filtered = response.map(movieObj => {
+                return movieObj[1].filter((show) => {
+                    return moment().add(filtersData.day, 'days').isSame(moment(show.specificDate), 'day')
                 })
-            }
-        }
-        return () => {
-            isComponentExist = false
-        };
+            })
+            setShowsToDisplay(filtered)
+            setIsDataLoaded(true)
+        }).catch((e) => {
+            console.log(e.message)
+        })
     }, [filtersData]);
 
     const onClickMovie = (show) => {
@@ -49,7 +40,12 @@ const CinemaShows = (props) => {
         if (props.user === 'admin')
             history.push(`/admin/editShow/${show._id}`)
         else
-            history.push(`/selectTickets-page/${show._id}`)
+            history.push(`/show-page/${show._id}`)
+    }
+
+    const showNoCinemas = (number) => {
+        if (number === 0)
+            return <div key={nanoid()} className="show">No Shows in Cinema Yet</div>
     }
 
     return (
@@ -58,24 +54,24 @@ const CinemaShows = (props) => {
                 isDataLoaded ?
                     showsToDisplay.length > 0 ?
                         showsToDisplay.map((show, i) => {
-                            if (show.length > 0) {
+                            if (show.length > 0)
                                 return (
                                     <div className={className + 'show'} key={nanoid()} >
-                                        <div className="showImg" onClick={() => onClickMovie(show[i])}>
-                                            <img src={show[1][0].movie.img} alt="" />
+                                        <div className="showImg" onClick={() => onClickMovie(showsToDisplay[i][0])}>
+                                            <img src={show[0].movie.img} alt="" />
                                         </div>
                                         <div className="showTextDescription">
-                                            <div className="show-title" onClick={() => onClickMovie(show[i])}>
-                                                <span>{show[1][0].movie.title}</span>
+                                            <div className="show-title" onClick={() => onClickMovie(showsToDisplay[i][0])}>
+                                                <span>{show[0].movie.title}</span>
                                             </div>
                                             <div className="show-duration">
-                                                <span>{show[1][0].movie.category}</span>
+                                                <span>{show[0].movie.category}</span>
                                                 <span className="divider"></span>
-                                                <span>{show[1][0].movie.duration} Min</span>
+                                                <span>{show[0].movie.duration} Min</span>
                                             </div>
                                             <div className="show-times">
                                                 {
-                                                    show[1].map((exactShow) => (
+                                                    show.map((exactShow) => (
                                                         <div key={nanoid()} className="show-time" onClick={() => onClickShow(exactShow)}>
                                                             {moment(exactShow.specificDate).format('HH:mm')}
                                                         </div>
@@ -85,7 +81,7 @@ const CinemaShows = (props) => {
                                             </div>
                                             <div className="show-language">
                                                 {
-                                                    show[1].map((exactShow, i) => {
+                                                    show.map((exactShow, i) => {
                                                         if (i === 0) return (
                                                             <span key={nanoid()}>{exactShow.language}</span>
                                                         )
@@ -97,10 +93,9 @@ const CinemaShows = (props) => {
                                         </div>
                                     </div>
                                 )
-                            }
                             else
-                                return <div key={nanoid()}></div>
-                        }) : <div className="show">No Shows in Cinema Yet</div> :
+                                return showNoCinemas(i)
+                        }) : showNoCinemas(0) :
                     <Spinner />
             }</div >
     )
