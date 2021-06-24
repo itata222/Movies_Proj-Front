@@ -6,12 +6,14 @@ const CategorySection = (props) => {
 
     return (
         <div className="category">
-            <span className="label">Category:</span>
-            <span>{props.categorynewCategory || props.movie.category}</span>
+            <div className="dataFlex">
+                <span className="label">:Category</span>
+                <span className="data">{props.categorynewCategory || props.movie.category}</span>
+            </div>
             {updateCategory ?
-                <div>
+                <div className="updateInput">
                     <input type="text" placeholder="Change Movie Category" onBlur={(e) => props.category.setNewCategory(e.target.value.trim())} />
-                    <button>Update !</button>
+                    {/* <button>Update !</button> */}
                 </div>
                 :
                 <button onClick={(e) => {

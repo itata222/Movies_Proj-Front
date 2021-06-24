@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useRef, useState } from 'react'
 import { nanoid } from 'nanoid';
 import { FiltersContext } from '../../contexts/filtersContext';
 import { CinemasContext } from '../../contexts/cinemasContext';
-import { setCinemaFilterAction } from '../../actions/filterActions';
+import { setCinemaFilterAction } from '../../actions/userActions';
 
 
 const FiltersCinemas = () => {

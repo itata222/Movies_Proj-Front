@@ -23,16 +23,17 @@ const AddMoviePage = () => {
         },
         submit: {
             margin: theme.spacing(3, 0, 2),
-            fontFamily: `'Poppins', sans-serif`
+            fontFamily: `'Poppins', sans-serif`,
+            backgroundColor: '#F5821E'
         },
     }));
 
     const classes = useStyles();
 
     return (
-        <div className="professorAddCourse">
+        <div className="addMovie">
             {showModal && <Modal setShowModal={setShowModal} text="Movie Added !" />}
-            <div className="addCourseContainer">
+            <div className="addMovieContainer">
                 <Container component="main" maxWidth="xs">
                     <CssBaseline />
                     <div className={classes.paper}>

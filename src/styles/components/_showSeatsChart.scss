@@ -57,9 +57,9 @@
 		background-color: darken($color: #eee, $amount: 8%);
 	}
 
-	.selectedSeat{
+	.selectedSeat:hover{
+		background-color: darken($color: #eee, $amount: 8%);
 		cursor: pointer;
-		background-color: $main-color-orange;
 	}
 
 	svg{

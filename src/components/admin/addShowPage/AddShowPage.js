@@ -83,8 +83,9 @@ const AddShowPage = () => {
             marginTop: theme.spacing(3),
         },
         submit: {
-            margin: theme.spacing(3, 0, 2),
-            fontFamily: `'Poppins', sans-serif`
+            margin: theme.spacing(3, 2, 2),
+            fontFamily: `'Poppins', sans-serif`,
+            backgroundColor: '#F5821E'
         },
     }));
 
@@ -106,11 +107,11 @@ const AddShowPage = () => {
 
     return (
 
-        <div className="professorAddCourse">
+        <div className="addShow">
             {!isPageLoaded && <Spinner />}
             {showSpinner && <Spinner />}
             {showModal && <Modal setShowModal={setShowModal} text="Show Added !" />}
-            <div className="addCourseContainer">
+            <div className="addShowContainer">
                 <Container component="main" maxWidth="xs">
                     <CssBaseline />
                     <div className={classes.paper}>
@@ -150,7 +151,7 @@ const AddShowPage = () => {
                                         <div>No Movies Yet!</div>
                                 }
                             </div>
-                            <Grid container spacing={2}>
+                            <Grid container spacing={2} className="gridContainer">
                                 <Grid item xs={12} sm={10}>
                                     <TextField
                                         variant="outlined"

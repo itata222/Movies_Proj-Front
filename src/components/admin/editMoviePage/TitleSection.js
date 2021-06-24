@@ -8,12 +8,14 @@ const TitleSection = (props) => {
 
     return (
         <div className="title">
-            <span className="label">Title:</span>
-            <span>{props.title.newTitle || props.movie.title}</span>
+            <div className="dataFlex">
+                <span className="label">:Title</span>
+                <span className="data">{props.title.newTitle || props.movie.title}</span>
+            </div>
             {updateTitle ?
-                <div>
+                <div className="updateInput">
                     <input type="text" placeholder="Change Movie Title" onBlur={(e) => props.title.setNewTitle(e.target.value.trim())} />
-                    <button>Update !</button>
+                    {/* <button>Update !</button> */}
                 </div>
                 :
                 <button onClick={(e) => {

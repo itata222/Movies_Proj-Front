@@ -1,12 +1,12 @@
 import moment from 'moment';
 import React, { useContext, useEffect, useState } from 'react'
-import { setMoviesAction } from '../../actions/adminActions';
-import { LoginContext } from '../../contexts/loginContext';
-import { MoviesContext } from '../../contexts/moviesContext';
-import { editShowFunc } from '../../services/adminService';
-import { getAllMoviesFunc, getShowByIdFunc } from '../../services/userService';
-import Modal from '../main/Modal';
-import Spinner from '../main/Spinner';
+import { setMoviesAction } from '../../../actions/adminActions';
+import { LoginContext } from '../../../contexts/loginContext';
+import { MoviesContext } from '../../../contexts/moviesContext';
+import { editShowFunc } from '../../../services/adminService';
+import { getAllMoviesFunc, getShowByIdFunc } from '../../../services/userService';
+import Modal from '../../main/Modal';
+import Spinner from '../../main/Spinner';
 
 const EditShowPage = (props) => {
     const showID = props.match.params.id;
@@ -72,12 +72,14 @@ const EditShowPage = (props) => {
                         <div className="admin-movies">
                             <div className="admin-movies-desc">
                                 <div className="Movie">
-                                    <span className="label">Movie:</span>
-                                    <span>{newMovie.title || show.movie.title}</span>
+                                    <div className="dataFlex">
+                                        <span className="label">:Movie</span>
+                                        <span>{newMovie.title || show.movie.title}</span>
+                                    </div>
                                     {updateMovie ?
                                         moviesData?.length > 0 ?
                                             moviesData.map((movie, i) => (
-                                                <div key={i} className="movie" onClick={(e) => {
+                                                <div key={i} className="movie-show" onClick={(e) => {
                                                     e.preventDefault();
                                                     setNewMovie(movie)
                                                 }}>
@@ -93,10 +95,13 @@ const EditShowPage = (props) => {
                                     }
                                 </div>
                                 <div className="Language">
-                                    <span className="label">Language:</span>
-                                    <span>{newLanguage || show.language}</span>
+                                    <div className="dataFlex">
+                                        <span className="label">:Language</span>
+                                        <span>{newLanguage || show.language}</span>
+                                    </div>
+
                                     {updateLanguage ?
-                                        <div>
+                                        <div className="updateInput">
                                             <input type="text" placeholder="Change Movie Language" onBlur={(e) => setNewLanguage(e.target.value.trim())} />
                                         </div>
                                         :
@@ -108,10 +113,13 @@ const EditShowPage = (props) => {
                                 </div>
 
                                 <div className="specificDate">
-                                    <span className="label">SpecificDate:</span>
-                                    <span>{moment(show.specificDate).format("dddd, MMMM Do, h:mm a")} </span>
+                                    <div className="dataFlex">
+                                        <span className="label">:SpecificDate</span>
+                                        <span>{moment(show.specificDate).format("dddd, MMMM Do, h:mm a")} </span>
+                                    </div>
+
                                     {updateSpecificDate ?
-                                        <div>
+                                        <div className="updateInput">
                                             <input type="datetime-local" placeholder="Change Movie specific Date" onChange={(e) => {
                                                 setNewSpecificDate(e.target.value)
                                             }} />

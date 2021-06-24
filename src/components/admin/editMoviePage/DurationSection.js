@@ -7,12 +7,14 @@ const DurationSection = (props) => {
 
     return (
         <div className="duration">
-            <span className="label">Duration:</span>
-            <span>{props.duration.newDuration || props.movie.duration} Minutes</span>
+            <div className="dataFlex">
+                <span className="label">:Duration</span>
+                <span className="data">{props.duration.newDuration || props.movie.duration} Minutes</span>
+            </div>
             {updateDuration ?
-                <div>
+                <div className="updateInput">
                     <input type="number" placeholder="Change Movie Duration" onBlur={(e) => props.duration.setNewDuration(e.target.value)} />
-                    <button>Update !</button>
+                    {/* <button>Update !</button> */}
                 </div>
                 :
                 <button onClick={(e) => {

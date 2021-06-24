@@ -1,17 +1,19 @@
-.all-movies{
-    margin: 5rem auto;
+.all-movies,.all-shows{
+    margin: 5rem auto !important;
     border: 1px solid $main-color-orange;
-    width: 70%;
+    width: 75%;
+    padding: 1rem;
 }
 
 .movies-header,.shows-header{
     margin: 2rem auto;
+    margin-top: 0;
     text-align: center;
     font-weight: 600;
-    font-size: $font-size-l;
+    font-size: $font-size-xl;
 }
 
-.movie,.admin-show{
+.movie{
     margin: 2rem auto;
     font-weight: 500;
     width: 100%;
@@ -24,13 +26,14 @@
         background-color: lighten($color: $main-color-orange, $amount: 20%);
         cursor: pointer;
     }
-    .showDesc{
-        margin: 0 1rem;
-        width: 50%;
-        display: inline;
-    }
+    // .showDesc{
+    //     margin: 0 1rem;
+    //     width: 50%;
+    //     display: inline;
+    // }
 }
 .label{
     margin: 0 0.5rem;
     font-size: $font-size-l;
 }
+

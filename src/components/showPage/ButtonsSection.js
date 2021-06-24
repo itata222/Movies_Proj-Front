@@ -1,6 +1,6 @@
 import React, { useContext } from 'react'
 import { useHistory } from 'react-router-dom'
-import { ReservationContext } from '../../../contexts/reservationContext'
+import { ReservationContext } from '../../contexts/reservationContext'
 
 const ButtonsSection = ({ showID }) => {
     const { reservationData } = useContext(ReservationContext)

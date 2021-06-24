@@ -8,9 +8,9 @@ const ImgSection = (props) => {
         <div className="img">
             <img src={props.img.newImageSrc || props.movie.img} alt="Movie" />
             {updateImg ?
-                <div>
+                <div className="updateInput">
                     <input type="text" placeholder="Change Movie Image" onBlur={(e) => props.img.setNewImageSrc(e.target.value)} />
-                    <button>Update !</button>
+                    {/* <button>Update</button> */}
                 </div>
                 :
                 <button onClick={(e) => {

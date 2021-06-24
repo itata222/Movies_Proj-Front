@@ -35,17 +35,17 @@ const Form = (props) => {
 
     return (
         <form className={props.classes.form} noValidate onSubmit={onSubmit}>
-            <Grid container spacing={3}>
-                <Grid item xs={12} sm={6}>
+            <Grid container spacing={2} className="gridContainer">
+                <Grid item xs={12} sm={8}>
                     <TitleInForm setTitle={setTitle} />
                 </Grid>
-                <Grid item xs={12} sm={10}>
+                <Grid item xs={12} sm={12}>
                     <DescriptionInForm setDescription={setDescription} />
                 </Grid>
                 <Grid item xs={12} sm={6}>
                     <DurationInForm setDuration={setDuration} />
                 </Grid>
-                <Grid item xs={12} sm={6}>
+                <Grid item xs={12} sm={8}>
                     <CategoryInForm setCategory={setCategory} />
                 </Grid>
                 <Grid item xs={12} sm={6}>

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { getAllMoviesFunc } from '../../services/userService';
 import InCinemaMovie from './InCinemaMovie';
-import Spinner from './Spinner';
+import Spinner from '../main/Spinner';
 import { nanoid } from 'nanoid';
 
 

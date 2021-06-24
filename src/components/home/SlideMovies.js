@@ -3,7 +3,7 @@ import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { MoviesContext } from '../../contexts/moviesContext';
 import { getAllMoviesFunc } from '../../services/userService';
-import Spinner from './Spinner';
+import Spinner from '../main/Spinner';
 
 const SlideMovies = () => {
 

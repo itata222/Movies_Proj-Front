@@ -55,6 +55,7 @@
             &:first-child,&:last-child{
                 transform: rotateZ(45deg);
                 display: unset;
+                
                 span{
                     display: block;
                     color: $main-color-black;

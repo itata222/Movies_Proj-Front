@@ -6,7 +6,6 @@ export const setMoviesAction = (movies) => ({
     type: 'SET_MOVIES',
     movies
 })
-
 export const addShowAction = (show) => ({
     type: 'ADD_SHOW',
     show
@@ -19,3 +18,13 @@ export const setCinemasAction = (cinemas) => ({
     type: 'SET_CINEMAS',
     cinemas
 })
+
+export const loginAction = ({ user, token }) => ({
+    type: "LOGIN",
+    user,
+    token
+});
+
+export const logoutAction = () => ({
+    type: "LOGOUT"
+});

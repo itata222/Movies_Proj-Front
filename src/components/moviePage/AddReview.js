@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { addReviewFunc } from '../../services/userService'
-import Modal from './Modal';
+import Modal from '../main/Modal';
 
 const AddReview = (props) => {
 

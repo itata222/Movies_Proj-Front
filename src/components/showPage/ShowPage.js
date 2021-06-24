@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react'
-import { getShowByIdFunc } from '../../../services/userService';
+import { getShowByIdFunc } from '../../services/userService';
 import ShowSeats from './ShowSeats'
 import SumSelect from './SumSelect';
-import Spinner from '../Spinner'
 import ButtonsSection from './ButtonsSection';
+import Spinner from '../main/Spinner';
 
 const ShowPage = (props) => {
     const showID = props.match.params.id;

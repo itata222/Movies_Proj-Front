@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { ReservationContext } from '../../../contexts/reservationContext'
+import { ReservationContext } from '../../contexts/reservationContext'
 
 const SumSelect = () => {
     const { reservationData } = useContext(ReservationContext);

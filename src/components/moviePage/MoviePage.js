@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { getMovieByIdFunc, getMovieRating } from '../../services/userService';
 import AddReview from './AddReview';
 import MovieReviews from './MovieReviews';
-import Spinner from './Spinner';
+import Spinner from '../main/Spinner';
 
 const MoviePage = (props) => {
     const movieID = props.match.params.id

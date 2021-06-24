@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import { LoginContext } from '../../contexts/loginContext';
 import CinemaShows from './CinemaShows';
-import FiltersHome from './FiltersHome';
+import FiltersHome from '../filters/FiltersHome';
 import SlideMovies from './SlideMovies';
 
 

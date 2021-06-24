@@ -8,12 +8,14 @@ const DescriptionSection = (props) => {
 
     return (
         <div className="description">
-            <span className="label">Description:</span>
-            <span>{props.description.newDescription || props.movie.description}</span>
+            <div className="dataFlex">
+                <span className="label">:Description</span>
+                <span className="data">{props.description.newDescription || props.movie.description}</span>
+            </div>
             {updateDescription ?
-                <div>
-                    <input type="text" placeholder="Change Movie Description" onBlur={(e) => props.description.setNewDescription(e.target.value.trim())} />
-                    <button>Update !</button>
+                <div className="updateInput">
+                    <input type="textarea" placeholder="Change Movie Description" onBlur={(e) => props.description.setNewDescription(e.target.value.trim())} />
+                    {/* <button>Update !</button> */}
                 </div>
                 :
                 <button onClick={(e) => {

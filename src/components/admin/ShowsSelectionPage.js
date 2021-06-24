@@ -1,6 +1,6 @@
 import React from 'react'
-import CinemaShows from '../main/CinemaShows';
-import FiltersCinemas from '../main/FiltersCinemas';
+import FiltersHome from '../filters/FiltersHome'
+import CinemaShows from '../home/CinemaShows'
 
 
 const AdminShowsSelectionPage = () => {
@@ -9,8 +9,10 @@ const AdminShowsSelectionPage = () => {
     return (
         <div className="all-shows">
             <div className="shows">
-                <FiltersCinemas />
-                <h2 className="shows-header"> Choose A Show To Edit:</h2>
+                <h2 className="shows-header"> :Choose A Show To Edit</h2>
+                <div className="filters">
+                    <FiltersHome />
+                </div>
                 <CinemaShows user='admin' />
             </div>
         </div>

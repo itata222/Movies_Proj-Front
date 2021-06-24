@@ -74,11 +74,15 @@
             flex-direction: column;
             margin: 1rem 1rem;
         }
-
-        button{
-            display: block;
-            width: 20%;
-            margin: auto;
-        }
     }
+}
+ .invalid-message {
+    color: red;
+    font-size: 0.75rem;
+  }
+
+.submitPay[disabled]{
+background-color: #ccc;
+color: black;
+cursor: not-allowed;
 }

@@ -3,9 +3,9 @@ import { useContext } from 'react';
 import { setCinemasAction } from '../../actions/adminActions';
 import { CinemasContext } from '../../contexts/cinemasContext';
 import { getAllCinemasFunc } from '../../services/userService';
+import Spinner from '../main/Spinner';
 import FiltersCinemas from './FiltersCinemas'
 import FiltersDays from './FiltersDays'
-import Spinner from './Spinner';
 
 
 const FiltersHome = () => {

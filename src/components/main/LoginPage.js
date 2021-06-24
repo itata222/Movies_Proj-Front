@@ -2,14 +2,13 @@
 import React, { useState, useContext } from "react";
 import { useHistory } from "react-router";
 import { LoginContext } from "../../contexts/loginContext";
-import { loginAction } from "../../actions/loginActions";
+import { loginAction } from "../../actions/adminActions";
 import { saveUserOnCookie } from '../../cookies/cookies'
 import { adminloginToDB } from "../../services/adminService";
-import Spinner from "../main/Spinner";
+import Spinner from "./Spinner";
 
 const LoginPage = () => {
     const { dispatchUserData } = useContext(LoginContext);
-
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [isEmailinputValid, setIsEmailInputValid] = useState(true);
@@ -18,6 +17,8 @@ const LoginPage = () => {
     const [showSpinner, setShowSpinner] = useState(false);
 
     const history = useHistory();
+    // if (!!userData.token)
+    //     history.push('/admin/home')
 
     const isFormInavlid = () => {
         return email === "" || password === "";

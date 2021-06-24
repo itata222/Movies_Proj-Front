@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import { NavLink, useHistory } from 'react-router-dom'
-import { logoutAction } from '../../actions/loginActions';
+import { logoutAction } from '../../actions/adminActions';
 import { LoginContext } from '../../contexts/loginContext';
 import { deleteUserFromCookie } from '../../cookies/cookies';
 import { adminlogoutFromDB } from '../../services/adminService';
@@ -35,7 +35,7 @@ const Header = () => {
                             <NavLink activeClassName="activeClassName" to="/admin/showsSelectionPage">עריכת הקרנה</NavLink>
                         </> :
                         <>   <NavLink activeClassName="activeClassName" to="/in-cinema">מה בקולנוע</NavLink>
-                            <NavLink activeClassName="activeClassName" to="/login">כניסה כמנהל</NavLink>
+                            {/* <NavLink activeClassName="activeClassName" to="/login">כניסה כמנהל</NavLink> */}
                         </>
                 }
 
